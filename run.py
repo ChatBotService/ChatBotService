@@ -3,10 +3,11 @@ from flask import Flask, render_template, request, redirect
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 # Models
-from models.models import db
+from models.models import db, ma
+
 # APIs
 from api.rest_test import TestResource
-from api.bot_creation import BotCreation
+from api.conversation_api import ConversationAPI
 
 import os
 
@@ -25,6 +26,7 @@ db_uri = 'sqlite:///{}'.format(db_path)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 
 db.init_app(app)
+ma.init_app(app)
 
 #with app.app_context():
 #    db.drop_all()
@@ -35,7 +37,7 @@ db.init_app(app)
 
 # APIs
 api.add_resource(TestResource,"/test", "/test/<int:id>")
-api.add_resource(BotCreation,"/create", "/create")
+api.add_resource(ConversationAPI,"/conversation", "/conversation")
 
 @app.route("/")
 def login():

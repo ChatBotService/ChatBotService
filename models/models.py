@@ -1,7 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 from datetime import datetime
 
 db = SQLAlchemy()
+ma = Marshmallow()
 
 class User(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
@@ -21,6 +23,19 @@ class TrainedModel(db.Model):
     creation_date = db.Column(db.DateTime, default=datetime.now)
     data = db.Column(db.LargeBinary)
     file_id = db.Column(db.Integer, db.ForeignKey("conversation_file.id"))
+
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("id",)
+
+class ConversationFileSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "name", "creation_date", "user_id")
+
+class TrainedModelSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "name", "creatin_date", "file_id")
 
 def init_db():
     user1 = User(id=0)

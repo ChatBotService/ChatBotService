@@ -24,7 +24,7 @@
     <div class="row no-gutters">
         <div class="col-sm min-vh-100 text-center">
             <div class="h5 mb-2 bg-secondary text-light">Your conversations</div>
-            <form action="/create" method="POST" enctype="multipart/form-data" class="p-5 pb-6 border-bottom">
+            <form action="/create" method="POST" enctype="multipart/form-data" class="p-5 pb-6 ml-5 mr-5 border-bottom">
                 <div class="form-group">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="conversation-file" id="conversation-file">
@@ -33,7 +33,12 @@
                 </div>
                 <button type="submit" class="btn btn-secondary">Upload</button>
             </form>
+            
+            <ul class="list-group pt-5">
+                <li class="list-group-item">List TODO...</li>
+            </ul>
         </div>
+
         <div class="col-sm border-left border-secondary min-vh-100 text-center">
             <div class="h5 mb-2 bg-secondary text-light">Your bots</div>
         </div>
