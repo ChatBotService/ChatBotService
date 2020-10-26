@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Conversation bot</title>
     <meta charset="utf-8">
@@ -12,21 +13,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-    <div class="h3 text-white">Conversation bot dashboard</div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="h3 pl-5 text-white">Conversation bot dashboard</div>
+    </nav>
 
-    
-<div class="row no-gutters">
-    <div class="col-sm min-vh-100 text-center">
-        <div class="h5 mb-2 bg-secondary text-light">Upload new  conversations</div>
-    </div>
-    <div class="col-sm border-left min-vh-100 text-center">
-        <div class="h5 mb-2 bg-secondary text-light">Your bots</div>
-    </div>
-</div>
 
+    <div class="row no-gutters">
+        <div class="col-sm min-vh-100 text-center">
+            <div class="h5 mb-2 bg-secondary text-light">Your conversations</div>
+            <form action="/create" method="POST" enctype="multipart/form-data" class="p-5 pb-6 border-bottom">
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="conversation-file" id="conversation-file">
+                        <label class="custom-file-label" for="conversation-file">Upload a new conversation...</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-secondary">Upload</button>
+            </form>
+        </div>
+        <div class="col-sm border-left border-secondary min-vh-100 text-center">
+            <div class="h5 mb-2 bg-secondary text-light">Your bots</div>
+        </div>
+    </div>
+    <script>
+        $('#conversation-file').on('change',function(){
+            //get the file name
+            var fileName = $(this).val().replaceAll("\\","\/");
+            fileName = fileName.substring(fileName.lastIndexOf("/") + 1)
+            //replace the label
+            $(this).next('.custom-file-label').html(fileName);
+        })
+    </script>
 </body>
+
 </html>
