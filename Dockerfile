@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3-slim
 
 WORKDIR /usr/src/app
 
@@ -8,4 +8,5 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+EXPOSE 8080
 CMD [ "python", "./run.py" ]

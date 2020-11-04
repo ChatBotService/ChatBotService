@@ -26,7 +26,7 @@ class ConversationAPI(Resource):
                 user_id = 0) #TODO: Hardcoded user id
             db.session.add(conversation_file)
             db.session.commit()
-        return redirect("/dashboard")
+        return Response(status=200)
     
     def delete(self):
         id = request.args.get("id")

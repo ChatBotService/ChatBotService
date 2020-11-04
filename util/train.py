@@ -84,11 +84,13 @@ def bot_interface(bot):
         text_input = input()
 
 
-def train_bot(file):
+def train_bot(file, participant):
     global file_name
     global learn_participant
     global bot
-    
+    learn_participant = participant
+    file_name = file.name
+
     print(f"Parsing file {file_name}")
     try:
         data = json.load(file)

@@ -41,6 +41,8 @@ class SimpleBot:
         input_vec = self.vectorize(token_input)
         max_sim = 0
         max_i = 0
+        if random.randint(1, 10) < 3:
+            return " ".join(self.messages[reply_participant][random.randint(0, max_len)])
         for i in range(len(self.messages_vec[input_participant])):
             vec = self.messages_vec[input_participant][i]
             cos_sim = dot(input_vec, vec)/(norm(input_vec)*norm(vec))

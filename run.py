@@ -8,6 +8,9 @@ from models.models import db, ma
 # APIs
 from api.rest_test import TestResource
 from api.conversation_api import ConversationAPI
+from api.chatbot_api import ChatbotAPI
+from api.processing_api import ProcessingAPI
+
 
 import os
 
@@ -38,6 +41,8 @@ ma.init_app(app)
 # APIs
 api.add_resource(TestResource,"/test", "/test/<int:id>")
 api.add_resource(ConversationAPI,"/conversation", "/conversation")
+api.add_resource(ChatbotAPI,"/chatbot", "/chatbot")
+api.add_resource(ProcessingAPI,"/process", "/process")
 
 @app.route("/")
 def login():
@@ -47,5 +52,5 @@ def login():
 def dashboard():
     return render_template("dashboard.html")
 
-
-app.run(host="0.0.0.0", port=80, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0",port=8080, debug=True)
