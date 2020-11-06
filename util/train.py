@@ -2,7 +2,7 @@ import json
 import sys
 import string
 from nltk.tokenize import RegexpTokenizer
-from simple_bot import SimpleBot
+from util.simple_bot import SimpleBot
 
 file_name = None
 learn_participant = None
