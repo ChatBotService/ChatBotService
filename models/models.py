@@ -14,6 +14,7 @@ class ConversationFile(db.Model):
     name = db.Column(db.String(300))
     creation_date = db.Column(db.DateTime, default=datetime.now)
     data = db.Column(db.LargeBinary)
+    data_size = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     models = db.relationship("TrainedModel")
 
@@ -31,7 +32,7 @@ class UserSchema(ma.Schema):
 
 class ConversationFileSchema(ma.Schema):
     class Meta:
-        fields = ("id", "name", "creation_date", "user_id")
+        fields = ("id", "name", "creation_date", "data_size", "user_id")
 
 class TrainedModelSchema(ma.Schema):
     class Meta:

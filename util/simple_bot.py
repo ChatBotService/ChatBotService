@@ -1,4 +1,6 @@
 import numpy as np
+import json
+import random
 from numpy import dot
 from numpy.linalg import norm
 import warnings
@@ -41,8 +43,16 @@ class SimpleBot:
         input_vec = self.vectorize(token_input)
         max_sim = 0
         max_i = 0
+        max_len = len(self.messages[reply_participant])
         if random.randint(1, 10) < 3:
             return " ".join(self.messages[reply_participant][random.randint(0, max_len)])
+        if input_participant == None:
+            pk = list(self.messages_vec)
+            if pk[0] == reply_participant:
+                input_participant = pk[1]
+            elif pk[1] == reply_participant:
+                input_participant = pk[0]
+
         for i in range(len(self.messages_vec[input_participant])):
             vec = self.messages_vec[input_participant][i]
             cos_sim = dot(input_vec, vec)/(norm(input_vec)*norm(vec))
@@ -50,3 +60,24 @@ class SimpleBot:
                 max_sim = cos_sim
                 max_i = i
         return " ".join(self.messages[reply_participant][max_i])
+
+    def load(self, file):
+        dic = json.loads(file.read())
+        self.messages = dic["messages"]
+        self.bow = dic["bow"]
+        mv = dic["messages_vec"]
+        for i in mv.keys():
+            for j in range(len(mv[i])):
+                    mv[i][j] = np.array(mv[i][j])
+        self.messages_vec = mv
+
+    def save(self, file_name):
+        mv = self.messages_vec
+        for i in mv.keys():
+            for j in range(len(mv[i])):
+                if type(mv[i][j]) is not list:
+                    mv[i][j] = mv[i][j].tolist()
+
+        dic = {"messages" : self.messages, "bow" : self.bow, "messages_vec" : mv}
+        with open(file_name, "w") as file:
+            file.write(json.dumps(dic))

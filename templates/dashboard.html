@@ -17,14 +17,36 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <div class="h3 pl-5 text-white">Conversation bot dashboard</div>
+        <div class="h3 text-white mx-auto" style="width: 80%;">Conversation bot dashboard</div>
     </nav>
 
 
-    <div class="row no-gutters">
+    <div class="row no-gutters mx-auto" style="width: 80%;">
         <div class="col-sm min-vh-100 text-center">
-            <div class="h5 mb-2 bg-secondary text-light">Your conversations</div>
-            <form action="/create" method="POST" enctype="multipart/form-data" class="p-5 pb-6 ml-5 mr-5 border-bottom">
+            <div class="h4 mb-2 bg-secondary text-light">Your conversations</div>
+            <table class="table table-hover table-light">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">File</th>
+                    <th scope="col">Upload date</th>
+                    <th scope="col">Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for i in range(user_conversations|length) %}
+                    {% set conv = user_conversations[i] %}
+                    <tr>
+                        <th scope="row">{{i}}</th>
+                        <td>{{conv.name}}</td>
+                        <td>{{conv.creation_date.strftime("%Y-%m-%d, %H:%M:%S")}}</td>
+                        <td>{{(conv.data_size / 1000)|int}} KB</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <form action="/dashboard" method="POST" enctype="multipart/form-data" class="p-5 pb-6 ml-5 mr-5 border-top">
                 <div class="form-group">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="conversation-file" id="conversation-file">
@@ -33,14 +55,10 @@
                 </div>
                 <button type="submit" class="btn btn-secondary">Upload</button>
             </form>
-            
-            <ul class="list-group pt-5">
-                <li class="list-group-item">List TODO...</li>
-            </ul>
         </div>
 
         <div class="col-sm border-left border-secondary min-vh-100 text-center">
-            <div class="h5 mb-2 bg-secondary text-light">Your bots</div>
+            <div class="h4 mb-2 bg-secondary text-light">Your bots</div>
         </div>
     </div>
     <script>

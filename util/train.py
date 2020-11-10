@@ -2,7 +2,7 @@ import json
 import sys
 import string
 from nltk.tokenize import RegexpTokenizer
-from util.simple_bot import SimpleBot
+from simple_bot import SimpleBot
 
 file_name = None
 learn_participant = None
@@ -106,6 +106,18 @@ def train_bot(file, participant):
     
     return bot
 
+def load_bot(file, participant):
+    global file_name
+    global learn_participant
+    global bot
+    learn_participant = participant
+    file_name = file.name
+
+    bot = SimpleBot({})
+    bot.load(file)
+    
+    return bot
+
 def main():
     global file_name
     global learn_participant
@@ -118,11 +130,22 @@ def main():
         learn_participant = sys.argv[2]
     
     file = open(file_name, "r", encoding="utf-8")
-    bot = train_bot(file)
-
+    bot = train_bot(file, "Jure Bevc")
+    bot.save("bot.mdl")
     # test bot
     bot_interface(bot)
 
+def main_load():
+    global file_name
+    global learn_participant
+    global bot
+
+    file_name = "bot.mdl"
+    file = open(file_name, "r", encoding="utf-8")
+    
+    bot = load_bot(file, "Jure Bevc")
+    # test bot
+    bot_interface(bot)
 
 if __name__ == "__main__":
-    main()
+    main_load()
