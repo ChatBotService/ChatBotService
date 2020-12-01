@@ -5,3 +5,4 @@ flask-marshmallow==0.14.0
 marshmallow-sqlalchemy==0.24.0
 nltk==3.5
 numpy==1.19.4
+PyMySQL==0.10.1

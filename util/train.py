@@ -2,7 +2,7 @@ import json
 import sys
 import string
 from nltk.tokenize import RegexpTokenizer
-from simple_bot import SimpleBot
+from util.simple_bot import SimpleBot
 
 file_name = None
 learn_participant = None
@@ -84,19 +84,17 @@ def bot_interface(bot):
         text_input = input()
 
 
-def train_bot(file, participant):
-    global file_name
+def train_bot(string_data, participant):
     global learn_participant
     global bot
     learn_participant = participant
-    file_name = file.name
 
-    print(f"Parsing file {file_name}")
+    print(f"Parsing string")
     try:
-        data = json.load(file)
+        data = json.loads(string_data)
     except IOError:
-        print(f"Error: Cannot open file {file_name}")
-        exit()
+        print(f"Error: Cannot parse string")
+        return None
     
     messages = preprocess(data)
 

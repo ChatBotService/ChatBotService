@@ -61,8 +61,8 @@ class SimpleBot:
                 max_i = i
         return " ".join(self.messages[reply_participant][max_i])
 
-    def load(self, file):
-        dic = json.loads(file.read())
+    def load(self, string_data):
+        dic = json.loads(string_data)
         self.messages = dic["messages"]
         self.bow = dic["bow"]
         mv = dic["messages_vec"]
@@ -71,7 +71,7 @@ class SimpleBot:
                     mv[i][j] = np.array(mv[i][j])
         self.messages_vec = mv
 
-    def save(self, file_name):
+    def save(self):
         mv = self.messages_vec
         for i in mv.keys():
             for j in range(len(mv[i])):
@@ -79,5 +79,4 @@ class SimpleBot:
                     mv[i][j] = mv[i][j].tolist()
 
         dic = {"messages" : self.messages, "bow" : self.bow, "messages_vec" : mv}
-        with open(file_name, "w") as file:
-            file.write(json.dumps(dic))
+        return json.dumps(dic)

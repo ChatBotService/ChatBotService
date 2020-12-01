@@ -1,9 +1,13 @@
-version: "3"
+version: "2"
 
 services:
-  test-service:
+  chatbot-service:
+    image: jurebevc/chatbot
+    container_name: chatbot
     build: .
     volumes:
       - .:/usr/src/app
     ports:
-      - 8080:8080
+      - 80:80
+    environment:
+      - DB_PATH=mysql+pymysql://sql7377269:MutA4e46L1@sql7.freemysqlhosting.net:3306/sql7377269

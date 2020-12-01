@@ -10,3 +10,7 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "python", "./run.py" ]
+
+# docker rmi $(docker images -a -q) -f
+
+# docker run --netowrk --name some-postgres -e POSTGRES_PASSWORD=123 -d postgres

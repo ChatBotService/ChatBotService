@@ -37,7 +37,7 @@
                 {% for i in range(user_conversations|length) %}
                     {% set conv = user_conversations[i] %}
                     <tr>
-                        <th scope="row">{{i}}</th>
+                        <th scope="row">{{i+1}}</th>
                         <td>{{conv.name}}</td>
                         <td>{{conv.creation_date.strftime("%Y-%m-%d, %H:%M:%S")}}</td>
                         <td>{{(conv.data_size / 1000)|int}} KB</td>
@@ -47,18 +47,64 @@
             </table>
 
             <form action="/dashboard" method="POST" enctype="multipart/form-data" class="p-5 pb-6 ml-5 mr-5 border-top">
-                <div class="form-group">
+                <div class="form-group mx-auto" style="max-width: 300px;">
+                    <label class="h5">Upload a new conversation</label><br>
+                    <label for="inputConversationName">Name</label>
+                    <input type="text" name="conversation_name" class="form-control" id="inputConversationName" placeholder="Conversation name">
+                    
+                    <label>File</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="conversation-file" id="conversation-file">
-                        <label class="custom-file-label" for="conversation-file">Upload a new conversation...</label>
+                        <label class="custom-file-label" for="conversation-file">Choose a file...</label>
                     </div>
+                    <input type="hidden" name="ui-action" value="new-conversation" />
                 </div>
                 <button type="submit" class="btn btn-secondary">Upload</button>
             </form>
         </div>
 
-        <div class="col-sm border-left border-secondary min-vh-100 text-center">
+        <div class="col-sm border-left border-secondary min-vh-100 text-center mx-auto">
             <div class="h4 mb-2 bg-secondary text-light">Your bots</div>
+
+            <table class="table table-hover table-light">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Creation date</th>
+                    <th scope="col">Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for i in range(trained_models|length) %}
+                    {% set model = trained_models[i] %}
+                    <tr>
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{model.name}}</td>
+                        <td>{{model.creation_date.strftime("%Y-%m-%d, %H:%M:%S")}}</td>
+                        <td>{{(model.data_size / 1000)|int}} KB</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <form action="/dashboard" method="POST" enctype="multipart/form-data" class="p-5 pb-6 ml-5 mr-5 border-top">
+                <div class="form-group mx-auto" style="max-width: 300px;" >
+                    <label class="h5">Create a new bot</label><br>
+
+                    <label for="inputModelName">Name</label>
+                    <input type="text" name="model_name" class="form-control" id="inputModelName" placeholder="Model name">
+                    <label for="conversation-select">Select conversation:</label>
+                    <select name="file_id" class="form-control" id="conversation-select">
+                        {% for i in range(user_conversations|length) %}
+                        {% set conv = user_conversations[i] %}
+                            <option value={{conv.id}}>{{i+1}}:  {{conv.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="ui-action" value="new-bot" />
+                </div>
+                <button type="submit" class="btn btn-secondary">Train bot</button>
+            </form>
         </div>
     </div>
     <script>

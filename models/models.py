@@ -23,6 +23,7 @@ class TrainedModel(db.Model):
     name = db.Column(db.String(300))
     creation_date = db.Column(db.DateTime, default=datetime.now)
     data = db.Column(db.LargeBinary)
+    data_size = db.Column(db.Integer)
     file_id = db.Column(db.Integer, db.ForeignKey("conversation_file.id"))
 
 
@@ -36,11 +37,11 @@ class ConversationFileSchema(ma.Schema):
 
 class TrainedModelSchema(ma.Schema):
     class Meta:
-        fields = ("id", "name", "creatin_date", "file_id")
+        fields = ("id", "name", "creation_date", "data_size", "file_id")
 
 def init_db():
-    user1 = User(id=0)
+    user1 = User()
     db.session.add(user1)
-    user2 = User(id=1)
+    user2 = User()
     db.session.add(user2)
     db.session.commit()
